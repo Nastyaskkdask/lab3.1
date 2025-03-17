@@ -1,22 +1,25 @@
-﻿open System
+open System
 
 let add (add: char) (sSeq: seq<string>) : seq<string> =
-    sSeq |> Seq.map (fun str -> str + string add)
+    printfn "Функция 'add' вызвана(отложенное вычисление)."
+    sSeq |> Seq.map (fun str ->
+        printfn "Обработка строки: %s" str
+        str + string add)
 
 
-let MySeq : seq<string> = 
-        printf "Введите строки:\n"
-        let rec readLines acc =
-            match Console.ReadLine() with
-            | null | "" -> acc |> Seq.toList |> List.rev |> Seq.ofList // Конвертация списка в последовательность
-            | line -> readLines (Seq.append acc (seq { yield line })) // Добавляем строку в последовательность
+let getMySeq() : seq<string> =
+    printfn "Введите строки (пустая строка для завершения):"
+    let rec readLines acc =
+        match Console.ReadLine() with
+        | null | "" ->
+            acc
+        | line ->
+            readLines (Seq.append acc (seq { yield line }))
 
-        let lines = readLines Seq.empty
-        if Seq.isEmpty lines then
-            printfn "\nСписок пуст."
-            exit 1
-        else
-            lines
+    readLines Seq.empty
+
+let mySeq : seq<string> = getMySeq()
+
 
 printf "Введите символ для добавления в конец: "
 let symbol = Console.ReadLine()
@@ -31,9 +34,13 @@ let check2 =
     else
         symbol.[0]
 
-printfn "Исходный список:"
-MySeq |> Seq.iter (printfn "%s")
 
-let newList = add check2 MySeq
+printfn "Вызываем функцию 'add'.  Вычисление отложено."
+let newList = add check2 mySeq
+
+printfn "\nИсходный список:"
+mySeq |> Seq.iter (printfn "%s")
+
 printfn "\nНовый список:"
 newList |> Seq.iter (printfn "%s")
+
