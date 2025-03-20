@@ -20,27 +20,32 @@ let getMySeq() : seq<string> =
 
 let mySeq : seq<string> = getMySeq()
 
+// Проверяем, пуста ли последовательность
+if Seq.isEmpty mySeq then
+    printfn "Последовательность пуста."
+else
+    printf "Введите символ для добавления в конец: "
+    let symbol = Console.ReadLine()
 
-printf "Введите символ для добавления в конец: "
-let symbol = Console.ReadLine()
-
-let check2 =
-    if String.IsNullOrEmpty(symbol) then
-        printfn "Ошибка: Вы не ввели символ."
-        exit 1
-    elif symbol.Length > 1 then
-        printfn "Ошибка: Введите только один символ."
-        exit 1
-    else
-        symbol.[0]
+    let check2 =
+        if String.IsNullOrEmpty(symbol) then
+            printfn "Ошибка: Вы не ввели символ."
+            exit 1
+        elif symbol.Length > 1 then
+            printfn "Ошибка: Введите только один символ."
+            exit 1
+        else
+            symbol.[0]
 
 
-printfn "Вызываем функцию 'add'.  Вычисление отложено."
-let newList = add check2 mySeq
+    printfn "Вызываем функцию 'add'.  Вычисление отложено."
+    let newList = add check2 mySeq
 
-printfn "\nИсходный список:"
-mySeq |> Seq.iter (printfn "%s")
+    printfn "\nИсходная последовательность:"
+    mySeq |> Seq.iter (printfn "%s")
 
-printfn "\nНовый список:"
-newList |> Seq.iter (printfn "%s")
+    printfn "\nНовая последовательность:"
+    newList |> Seq.iter (printfn "%s")
+
+
 
