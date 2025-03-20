@@ -6,7 +6,6 @@ let add (add: char) (sSeq: seq<string>) : seq<string> =
         printfn "Обработка строки: %s" str
         str + string add)
 
-
 let getMySeq() : seq<string> =
     printfn "Введите строки (пустая строка для завершения):"
     let rec readLines acc =
@@ -20,7 +19,6 @@ let getMySeq() : seq<string> =
 
 let mySeq : seq<string> = getMySeq()
 
-// Проверяем, пуста ли последовательность
 if Seq.isEmpty mySeq then
     printfn "Последовательность пуста."
 else
